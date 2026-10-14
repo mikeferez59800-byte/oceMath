@@ -341,6 +341,138 @@ button:disabled{opacity:.4;}
 .note{color:var(--doux);font-size:.92em;}
 .zone-texte{width:100%;min-height:120px;font-family:monospace;font-size:13px;border-radius:12px;border:2px solid var(--gris);padding:10px;-webkit-user-select:text;user-select:text;}
 .alerte{background:var(--orange-clair);border-radius:16px;padding:12px 18px;color:#8A3B06;font-weight:700;}
+
+/* ================================================================
+   TÉLÉPHONE : mêmes écrans, tailles resserrées
+   (petit côté de l'écran < 500 px ou largeur < 600 px)
+   ================================================================ */
+@media (max-width:600px), (max-height:500px){
+  :root{--rayon:18px;--texte:clamp(17px,4.6vmin,22px);--titre:clamp(22px,6.4vmin,30px);--touche:clamp(46px,13vmin,58px);}
+  .btn{min-height:52px;min-width:52px;padding:8px 18px;gap:8px;}
+  .btn.grand{min-height:60px;font-size:clamp(20px,6vmin,28px);padding:8px 22px;}
+  .btn-rond{width:52px;height:52px;min-width:52px;min-height:52px;font-size:24px;}
+  .btn-mini,.onglet,.bascule{min-height:48px;min-width:48px;padding:6px 12px;font-size:16px;}
+  .barre{min-height:60px;padding:6px 10px;gap:8px;}
+  .espace{width:52px;}
+  .btn-ecouter{min-height:52px;padding:6px 16px;font-size:18px;gap:6px;}
+  .etoiles{gap:4px;}
+  .etoiles svg{width:clamp(24px,7vmin,34px);}
+  .consigne{font-size:clamp(17px,5vmin,22px);padding:0 10px 4px;}
+  .zone-jeu{gap:8px;padding:0 8px 8px;}
+  .scene{border-radius:20px;padding:8px;}
+  .pave,.pave-touches{gap:6px;}
+  .pave-ecran{border-width:3px;border-radius:14px;}
+  .touche{border-radius:14px;}
+  .calcul{font-size:clamp(32px,11vmin,52px);}
+  .trou{border-bottom-width:4px;}
+  .choix-grille{gap:8px;}
+  .btn-choix{min-height:56px;min-width:72px;font-size:clamp(26px,9vmin,40px);border-radius:18px;border-width:3px;padding:2px 14px;}
+  .toit{width:120px;height:48px;font-size:30px;}
+  .etage span{width:52px;height:40px;font-size:24px;border-radius:8px;}
+  .jeton{width:32px;height:32px;border-width:3px;}
+  .tuile{min-width:64px;height:80px;font-size:44px;border-width:4px;border-radius:16px;padding:0 8px;}
+  .op{font-size:32px;}
+  .case{width:68px;height:82px;font-size:44px;border-width:4px;border-radius:16px;}
+  .case-syl{min-width:70px;font-size:34px;}
+  .carte-lettre{border-width:3px;border-radius:14px;}
+  .mot-lire{font-size:clamp(44px,14vmin,64px);}
+  .carte-dessin{width:clamp(76px,22vmin,104px);height:clamp(76px,22vmin,104px);padding:6px;border-radius:18px;border-width:3px;}
+  .dessin-grand{width:clamp(80px,24vmin,110px);height:clamp(80px,24vmin,110px);}
+  .ecoute-grand{width:64px;height:64px;font-size:32px;}
+  .cerceau{width:clamp(80px,24vmin,110px);height:clamp(80px,24vmin,110px);border-width:8px;font-size:clamp(30px,10vmin,42px);}
+  .cerceaux{gap:10px;}
+  .voile .gym-svg{height:min(36vh,36vw);}
+  .bravo-texte{font-size:clamp(32px,10vmin,48px);}
+  .bravo-sous{font-size:18px;}
+  #btn-continuer{bottom:calc(8px + env(safe-area-inset-bottom));}
+  .centre{gap:10px;padding:10px;}
+  .centre p{font-size:18px;}
+  .medaille-grande{height:min(28vh,36vw);}
+  .compte-rebours{width:min(28vh,40vw);height:min(28vh,40vw);}
+  .rangee-btn{gap:10px;}
+  .vitrine-corps{padding:4px 12px 16px;gap:12px;}
+  .etagere{gap:16px;padding:10px;border-radius:18px;border-bottom-width:10px;}
+  .etagere .m{font-size:24px;}
+  .etagere svg{height:56px;}
+  .prochain{font-size:17px;}
+  .recomp-titre{font-size:20px;}
+  .recomp-grille{gap:8px;}
+  .recomp{width:92px;min-height:104px;font-size:14px;border-radius:16px;}
+  .recomp .gym-svg{height:60px;}
+  .recomp .ico{font-size:32px;}
+  .crea-corps{gap:10px;padding:4px 10px 10px;}
+  .crea-droite{gap:10px;}
+  .crea-question{font-size:20px;}
+  .options{gap:8px;}
+  .opt{width:60px;height:60px;border-radius:16px;border-width:4px;}
+  .nom-affiche{min-width:min(70vw,320px);min-height:52px;font-size:30px;border-width:3px;}
+  .pave-lettres{gap:5px;}
+  .pave-lettres .touche{font-size:22px;}
+  .panneau-gym{font-size:16px;padding:4px 12px;border-width:2px;}
+  .accueil-corps{gap:12px;padding:8px 12px 12px;}
+  .accueil-boutons{gap:10px;}
+  #agres-matieres{padding:0 10px 8px !important;}
+  .grille-agres{gap:8px;padding:2px 10px 10px;}
+  .carte-agres{border-radius:18px;padding:6px;gap:2px;}
+  .carte-agres svg{height:min(12vmin,64px);}
+  .carte-agres .t{font-size:17px;}
+  .carte-agres .m{font-size:13px;}
+  .porte{gap:12px;padding:8px;}
+  .parent-onglets{gap:6px;padding:0 10px 8px;}
+  .parent-corps{padding:0 12px 20px;font-size:16px;}
+  .bloc{padding:10px 12px;border-radius:14px;}
+}
+/* Téléphone tenu en hauteur */
+@media (max-width:600px) and (orientation:portrait){
+  :root{--touche:min(56px, calc((100vw - 64px) / 6));}
+  .btn-ecouter .lib{display:none;}
+  .btn-ecouter{width:52px;padding:0;justify-content:center;border-radius:50%;}
+  .pave{flex-direction:column;align-items:stretch;gap:6px;}
+  .pave-ecran{width:auto;height:52px;}
+  .accueil-heros .gym-svg{height:26vh;}
+  .accueil-boutons{min-width:0;width:100%;}
+  .crea-apercu .gym-svg{height:17vh;}
+  .pave-lettres{grid-template-columns:repeat(7,1fr);width:calc(100vw - 20px);}
+  .pave-lettres .touche{height:48px;}
+  .maison-scene{gap:8px;}
+  .jetons{gap:6px;}
+  .tuile{min-width:76px;height:96px;font-size:52px;}
+  .case{width:80px;height:96px;font-size:52px;}
+  .case-syl{min-width:84px;font-size:40px;}
+  .carte-lettre{width:60px;height:68px;font-size:36px;}
+  .carte-syl{width:auto;min-width:68px;height:64px;font-size:30px;}
+  .btn-choix{min-height:68px;min-width:84px;font-size:40px;}
+  .cerceau{width:116px;height:116px;font-size:46px;}
+  .carte-dessin{width:116px;height:116px;}
+  .dessin-grand{width:120px;height:120px;}
+  .mot-lire{font-size:64px;}
+  .carte-agres svg{height:min(22vw,90px);}
+  .carte-agres .t{font-size:18px;}
+  .etage span{width:60px;height:46px;font-size:28px;}
+  .toit{width:136px;height:54px;font-size:34px;}
+  .jeton{width:38px;height:38px;}
+}
+/* Téléphone tenu en largeur */
+@media (max-height:500px) and (orientation:landscape){
+  :root{--touche:min(56px, calc((100vh - 136px) / 4.3));}
+  .barre{min-height:52px;padding:4px 10px;}
+  .btn-rond,.btn-ecouter{height:48px;min-height:48px;}
+  .btn-rond{width:48px;min-width:48px;}
+  .pave{flex-direction:row;align-items:center;gap:8px;}
+  .pave-ecran{width:calc(var(--touche) * 1.5);height:calc(var(--touche) * 1.4);}
+  .accueil-heros .gym-svg{height:50vh;}
+  .accueil-boutons{min-width:min(46vw,360px);}
+  .crea-apercu .gym-svg{height:52vh;}
+  .pave-lettres{grid-template-columns:repeat(8,minmax(44px,1fr));}
+  .pave-lettres .touche{height:44px;}
+  .crea-droite{gap:6px;}
+  .grille-agres{grid-template-columns:repeat(3,1fr);}
+  .carte-agres svg{height:min(13vh,52px);}
+  .voile .gym-svg{height:44vh;}
+  .medaille-grande{height:34vh;}
+  #btn-continuer{left:auto;right:calc(12px + env(safe-area-inset-right));transform:none;}
+  #btn-continuer:active{transform:translateY(4px);}
+}
 </style>
 </head>
 <body>
@@ -389,7 +521,7 @@ button:disabled{opacity:.4;}
   <div class="barre">
     <button class="btn-rond" id="jeu-maison" aria-label="Retour au gymnase"><span data-ico="maison"></span></button>
     <div class="etoiles" id="etoiles"></div>
-    <button class="btn-ecouter" id="jeu-ecouter"><span data-ico="haut"></span> Réécouter</button>
+    <button class="btn-ecouter" id="jeu-ecouter"><span data-ico="haut"></span> <span class="lib">Réécouter</span></button>
   </div>
   <div class="consigne" id="consigne"></div>
   <div class="zone-jeu" id="zone-jeu">
@@ -2087,27 +2219,39 @@ enregistrerJeu({
     return { n, b, r: n - b, objets: p.objets, objet: choix(OBJETS_GYM), cle: n + '-' + b };
   },
   consigne: q => ({ texte: 'Combien en reste-t-il ?', voix: `${q.n} moins ${q.b}, combien en reste-t-il ?` }),
-  /* Les objets pendent à la barre haute (10 max), puis à la barre basse */
-  place(i) { const bas = i >= 10, k = i % 10; return { x: 70 + k * 54, y: bas ? 236 : 116, fil: bas ? 196 : 76 }; },
+  /* Les objets pendent à la barre haute (10 max), puis à la barre basse.
+     Téléphone en hauteur : 5 objets par barre, plus gros, barres empilées. */
+  geo(q) {
+    const etroit = window.innerWidth < 600 && window.innerHeight > window.innerWidth;
+    if (!etroit) return q.n <= 5 ? { parBarre: 5, x0: 120, dx: 100, y0: 76, h: 120, W: 640, sol: 360, t: 64 }
+                                 : { parBarre: 10, x0: 70, dx: 54, y0: 76, h: 120, W: 640, sol: 360, t: 44 };
+    const rangs = Math.ceil(q.n / 5);
+    return { parBarre: 5, x0: 52, dx: 64, y0: 30, h: 112, W: 360, sol: 30 + rangs * 112 + 24, t: 52 };
+  },
+  place(i, q) {
+    const G = this.geo(q), r = Math.floor(i / G.parBarre), k = i % G.parBarre, fil = G.y0 + r * G.h;
+    return { x: G.x0 + k * G.dx, y: fil + 40 + G.t / 2 - 2, fil };
+  },
   barresSVG(q) {
-    let s = `<line x1="40" y1="76" x2="600" y2="76" stroke="#C98B4A" stroke-width="12" stroke-linecap="round"/>`;
-    if (q.n > 10) s += `<line x1="40" y1="196" x2="600" y2="196" stroke="#C98B4A" stroke-width="12" stroke-linecap="round"/>`;
-    s += `<rect x="20" y="360" width="600" height="24" rx="12" fill="#2F6FD0" opacity=".35"/>`;
+    const G = this.geo(q), rangs = Math.ceil(q.n / G.parBarre);
+    let s = '';
+    for (let r = 0; r < rangs; r++) s += `<line x1="${G.x0 - 30}" y1="${G.y0 + r * G.h}" x2="${G.W - 40 + (G.W < 400 ? 20 : 0)}" y2="${G.y0 + r * G.h}" stroke="#C98B4A" stroke-width="12" stroke-linecap="round"/>`;
+    s += `<rect x="20" y="${G.sol}" width="${G.W - 40}" height="24" rx="12" fill="#2F6FD0" opacity=".35"/>`;
     for (let i = 0; i < q.n; i++) {
-      const { x, y, fil } = this.place(i);
-      s += `<g class="pendu" data-i="${i}" style="cursor:pointer;transition:transform .6s ease-in"><line x1="${x}" y1="${fil}" x2="${x}" y2="${y - 20}" stroke="#56607A" stroke-width="2"/>${svgObjet(q.objet, x, y, 44)}<rect x="${x - 26}" y="${fil}" width="52" height="${y - fil + 26}" fill="transparent"/></g>`;
+      const { x, y, fil } = this.place(i, q);
+      s += `<g class="pendu" data-i="${i}" style="cursor:pointer;transition:transform .6s ease-in"><line x1="${x}" y1="${fil}" x2="${x}" y2="${y - G.t / 2}" stroke="#56607A" stroke-width="2"/>${svgObjet(q.objet, x, y, G.t)}<rect x="${x - G.dx / 2 + 1}" y="${fil}" width="${G.dx - 2}" height="${y - fil + G.t / 2 + 4}" fill="transparent"/></g>`;
     }
-    return `<svg class="svg-scene" id="barres" viewBox="0 0 640 390" preserveAspectRatio="xMidYMid meet">${s}</svg>`;
+    return `<svg class="svg-scene" id="barres" viewBox="0 0 ${G.W} ${G.sol + 30}" preserveAspectRatio="xMidYMid meet">${s}</svg>`;
   },
   faireTomber(g, i) {
     g.dataset.tombe = '1';
-    const { y } = this.place(i);
-    g.style.transform = `translateY(${340 - y}px)`;
+    const { y } = this.place(i, this.q), G = this.geo(this.q);
+    g.style.transform = `translateY(${G.sol - 20 - y}px)`;
     $('line', g).style.display = 'none';
     g.style.opacity = '.45';
   },
   afficher(q, scene, rep, api) {
-    q.tombes = 0;
+    q.tombes = 0; this.q = q;
     scene.innerHTML = `<div class="scene-col"><div class="calcul">${q.n} − ${q.b} = <span class="trou" id="trou">?</span></div>
       <div id="zone-barres" style="width:100%;flex:1;min-height:0;display:${q.objets === 'non' ? 'none' : 'flex'}">${this.barresSVG(q)}</div></div>`;
     this.brancher(q, api, q.objets === 'toucher');
@@ -2132,7 +2276,7 @@ enregistrerJeu({
     const gs = $$('#barres .pendu');
     gs.forEach((g, i) => {
       if (i >= q.n - q.b) this.faireTomber(g, i);
-      else { const { x, fil } = this.place(i); g.insertAdjacentHTML('beforeend', `<circle cx="${x + 20}" cy="${fil + 14}" r="14" fill="#23804D"/><text x="${x + 20}" y="${fil + 15}" font-size="16" font-weight="700" fill="#fff" text-anchor="middle" dominant-baseline="central">${i + 1}</text>`); }
+      else { const { x, fil } = this.place(i, q); g.insertAdjacentHTML('beforeend', `<circle cx="${x + 20}" cy="${fil + 14}" r="14" fill="#23804D"/><text x="${x + 20}" y="${fil + 15}" font-size="16" font-weight="700" fill="#fff" text-anchor="middle" dominant-baseline="central">${i + 1}</text>`); }
     });
     const t = $('#trou'); t.textContent = q.r; t.classList.add('rempli');
     return `${q.n} − ${q.b} = ${q.r}. ${q.b} objet${q.b > 1 ? 's tombent' : ' tombe'}, il en reste ${q.r}.`;
