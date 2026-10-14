@@ -275,6 +275,10 @@ button:disabled{opacity:.4;}
 #btn-continuer.actif{display:inline-flex;}
 #btn-continuer:active{transform:translateX(-50%) translateY(4px);}
 
+#voile-demarrer{position:fixed;z-index:50;background:var(--fond);padding:4vmin;}
+#voile-demarrer .gym-svg{height:min(40vh,55vw);}
+#btn-demarrer{min-width:min(70vw,360px);}
+.demarrer-note{max-width:560px;margin:0;font-size:clamp(15px,2.2vmin,19px);color:var(--doux);text-align:center;line-height:1.35;background:#fff;border-radius:16px;padding:10px 16px;}
 /* ---------- Médaille, pause, fin ---------- */
 .centre{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.5vmin;padding:3vmin;text-align:center;}
 .centre h2{margin:0;font-size:var(--titre);}
@@ -479,6 +483,13 @@ button:disabled{opacity:.4;}
 
 <!-- =================== ÉCRANS =================== -->
 
+<!-- Démarrage : un premier toucher est obligatoire pour que le téléphone autorise le son -->
+<div class="voile actif" id="voile-demarrer">
+  <div id="demarrer-gym"></div>
+  <button class="btn vert grand" id="btn-demarrer"><span data-ico="haut"></span> Jouer</button>
+  <p class="demarrer-note" id="demarrer-note" hidden></p>
+</div>
+
 <!-- Accueil : le club de gym -->
 <section class="ecran" id="ecran-accueil">
   <div class="barre">
@@ -655,32 +666,34 @@ const CONFIG = {
    vu     : true = coché par défaut comme « déjà vu en classe »
    pasAvec: voyelles avec lesquelles on n'associe pas cette consonne (ex. c + i = « ci » se lit [si])
    syllabes:false = ne pas utiliser ce son dans les jeux de syllabes */
+/* dire : le son de la lettre (« meu ») ; nom : le nom de la lettre (« ème »).
+   L'espace parent choisit lequel la voix utilise (Réglages › « Quand on touche une lettre »). */
 const SONS = [
   // Voyelles
-  { g:'a',  type:'voyelle',  dire:'a',   vu:true },
-  { g:'i',  type:'voyelle',  dire:'i',   vu:true },
-  { g:'o',  type:'voyelle',  dire:'o',   vu:true },
-  { g:'u',  type:'voyelle',  dire:'u',   vu:true },
-  { g:'e',  type:'voyelle',  dire:'eu',  vu:true },
-  { g:'é',  type:'voyelle',  dire:'é',   vu:true },
-  { g:'y',  type:'voyelle',  dire:'i',   vu:false, syllabes:false },
+  { g:'a',  type:'voyelle',  dire:'a', nom:'a',   vu:true },
+  { g:'i',  type:'voyelle',  dire:'i', nom:'i',   vu:true },
+  { g:'o',  type:'voyelle',  dire:'o', nom:'o',   vu:true },
+  { g:'u',  type:'voyelle',  dire:'u', nom:'u',   vu:true },
+  { g:'e',  type:'voyelle',  dire:'eu', nom:'eu',  vu:true },
+  { g:'é',  type:'voyelle',  dire:'é', nom:'é',   vu:true },
+  { g:'y',  type:'voyelle',  dire:'i', nom:'i grec',   vu:false, syllabes:false },
   // Consonnes (une à une, dans l'ordre de la classe)
-  { g:'l',  type:'consonne', dire:'leu', vu:true },
-  { g:'m',  type:'consonne', dire:'meu', vu:true },
-  { g:'r',  type:'consonne', dire:'reu', vu:true },
-  { g:'s',  type:'consonne', dire:'seu', vu:false },
-  { g:'f',  type:'consonne', dire:'feu', vu:false },
-  { g:'n',  type:'consonne', dire:'neu', vu:false },
-  { g:'v',  type:'consonne', dire:'veu', vu:false },
-  { g:'p',  type:'consonne', dire:'peu', vu:false },
-  { g:'t',  type:'consonne', dire:'teu', vu:false },
-  { g:'ch', type:'consonne', dire:'cheu',vu:false },
-  { g:'j',  type:'consonne', dire:'jeu', vu:false },
-  { g:'d',  type:'consonne', dire:'deu', vu:false },
-  { g:'b',  type:'consonne', dire:'beu', vu:false },
-  { g:'c',  type:'consonne', dire:'keu', vu:false, pasAvec:['e','i','é','y'] },
-  { g:'g',  type:'consonne', dire:'gueu',vu:false, pasAvec:['e','i','é','y'] },
-  { g:'z',  type:'consonne', dire:'zeu', vu:false },
+  { g:'l',  type:'consonne', dire:'leu', nom:'elle', vu:true },
+  { g:'m',  type:'consonne', dire:'meu', nom:'ème', vu:true },
+  { g:'r',  type:'consonne', dire:'reu', nom:'ère', vu:true },
+  { g:'s',  type:'consonne', dire:'seu', nom:'esse', vu:false },
+  { g:'f',  type:'consonne', dire:'feu', nom:'effe', vu:false },
+  { g:'n',  type:'consonne', dire:'neu', nom:'ène', vu:false },
+  { g:'v',  type:'consonne', dire:'veu', nom:'vé', vu:false },
+  { g:'p',  type:'consonne', dire:'peu', nom:'pé', vu:false },
+  { g:'t',  type:'consonne', dire:'teu', nom:'té', vu:false },
+  { g:'ch', type:'consonne', dire:'cheu', nom:'cé, ache',vu:false },
+  { g:'j',  type:'consonne', dire:'jeu', nom:'ji', vu:false },
+  { g:'d',  type:'consonne', dire:'deu', nom:'dé', vu:false },
+  { g:'b',  type:'consonne', dire:'beu', nom:'bé', vu:false },
+  { g:'c',  type:'consonne', dire:'keu', nom:'cé', vu:false, pasAvec:['e','i','é','y'] },
+  { g:'g',  type:'consonne', dire:'gueu', nom:'gé',vu:false, pasAvec:['e','i','é','y'] },
+  { g:'z',  type:'consonne', dire:'zeu', nom:'zède', vu:false },
   // Graphèmes « voyelles » complexes : cochés quand ils sont vus en classe
   { g:'ou', type:'voyelle',  dire:'ou',  vu:false, complexe:true },
   { g:'on', type:'voyelle',  dire:'on',  vu:false, complexe:true },
@@ -874,7 +887,7 @@ function etatParDefaut() {
       niveau:'CP', periode:1,
       sonsVus: SONS.filter(s => s.vu).map(s => s.g),
       priorites: [],
-      dureeSeance: 15, pauses: true, lectureAuto: true, sons: true, vitesseVoix: 0.9, nomVoix: '',
+      dureeSeance: 15, pauses: true, lectureAuto: true, sons: true, vitesseVoix: 0.9, nomVoix: '', lettres: 'nom',
     },
     paliers: {},        // par compétence : { p: palier, bonnes: réussites d'affilée, erreurs: erreurs récentes }
     stats: { jours:{}, jeux:{}, competences:{} },
@@ -921,12 +934,17 @@ function prochaineRecompense() {
    ===================================================================== */
 const Sons = {
   ctx: null,
-  activer() { // à appeler lors d'un premier toucher (règle des navigateurs)
+  activer() { // à appeler pendant un toucher (règle des navigateurs : pas de son avant)
     try {
       if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-      if (this.ctx.state === 'suspended') this.ctx.resume();
+      if (this.ctx.state !== 'running') { const p = this.ctx.resume(); if (p && p.catch) p.catch(() => {}); }
+      if (!this.amorce) { // un son vide joué pendant le toucher débloque les téléphones
+        const b = this.ctx.createBuffer(1, 1, 22050), src = this.ctx.createBufferSource();
+        src.buffer = b; src.connect(this.ctx.destination); src.start(0); this.amorce = true;
+      }
     } catch (e) { this.ctx = null; }
   },
+  pret() { return !!(this.ctx && this.ctx.state === 'running'); },
   note(freq, debut, duree, type = 'triangle', vol = 0.18) {
     const c = this.ctx, t = c.currentTime + debut;
     const o = c.createOscillator(), g = c.createGain();
@@ -979,6 +997,8 @@ const Sons = {
 /* =====================================================================
    5. VOIX FRANÇAISE (Web Speech API)
    ===================================================================== */
+/* Navigateur intégré à une appli (Messenger, Facebook, Instagram…) : la voix y est souvent absente */
+const NAV_INTEGRE = /FBAN|FBAV|FB_IAB|FBIOS|Messenger|Instagram|Snapchat|Line\/|; wv\)/i.test(navigator.userAgent || '');
 const Voix = {
   voix: null, dernier: '',
   init() {
@@ -993,7 +1013,8 @@ const Voix = {
     };
     this.choisir = choisir;
     choisir();
-    speechSynthesis.onvoiceschanged = choisir;
+    speechSynthesis.onvoiceschanged = () => { this.voixChargees = true; choisir(); };
+    setTimeout(() => { this.voixChargees = true; }, 2500);
   },
   dire(texte, fin) {
     if (!texte) { fin && fin(); return; }
@@ -1001,6 +1022,7 @@ const Voix = {
     if (!('speechSynthesis' in window)) { fin && fin(); return; }
     try {
       speechSynthesis.cancel();
+      if (speechSynthesis.paused) speechSynthesis.resume(); // Android reste parfois « en pause »
       const u = new SpeechSynthesisUtterance(texte);
       u.lang = 'fr-FR'; if (this.voix) u.voice = this.voix;
       u.rate = etat.reglages.vitesseVoix || 0.9; u.pitch = 1;
@@ -1008,12 +1030,34 @@ const Voix = {
       setTimeout(() => speechSynthesis.speak(u), 60); // petit délai : évite un bug de Chrome après cancel()
     } catch (e) { fin && fin(); }
   },
+  /* Premier mot dit PENDANT un toucher : sur téléphone, c'est ce qui autorise la voix ensuite */
+  amorcer(texte) {
+    if (!('speechSynthesis' in window)) return;
+    try {
+      speechSynthesis.cancel(); speechSynthesis.resume();
+      const u = new SpeechSynthesisUtterance(texte || ' ');
+      u.lang = 'fr-FR'; if (this.voix) u.voice = this.voix;
+      u.rate = etat.reglages.vitesseVoix || 0.9; if (!texte) u.volume = 0;
+      speechSynthesis.speak(u);
+      if (texte) this.dernier = texte;
+    } catch (e) {}
+  },
+  /* Ce qui empêche d'entendre la voix sur cet appareil (texte pour les parents), ou '' */
+  probleme() {
+    if (NAV_INTEGRE) return 'Vous avez ouvert l’appli dans Messenger (ou une autre appli) : la voix y est souvent coupée. Touchez ⋮ en haut à droite, puis « Ouvrir dans Chrome ».';
+    if (!('speechSynthesis' in window)) return 'Ce navigateur ne sait pas lire à voix haute. Ouvrez l’appli dans Chrome (Android) ou Safari (iPhone, iPad).';
+    if (this.voixChargees && !this.francaises().length) return 'Aucune voix française sur cet appareil. Dans les paramètres, cherchez « Synthèse vocale » et installez le français (Google).';
+    return '';
+  },
   /* Voix françaises installées sur la tablette (pour le choix dans l'espace parent) */
   francaises() { try { return speechSynthesis.getVoices().filter(v => (v.lang || '').toLowerCase().startsWith('fr')); } catch (e) { return []; } },
   taire() { try { speechSynthesis.cancel(); } catch (e) {} },
 };
 /* Prononciation d'un son ou d'une syllabe */
-const direSon = g => (SONS.find(s => s.g === g) || { dire: g }).dire;
+const direSon = g => {
+  const s = SONS.find(x => x.g === g) || { dire: g };
+  return etat.reglages.lettres === 'son' ? s.dire : (s.nom || s.dire);
+};
 const direSyllabe = t => DIRE_SYLLABES[t] || t;
 
 /* =====================================================================
@@ -2660,8 +2704,11 @@ function pageReglages() {
     <p class="note">Choisissez la voix la plus agréable, puis touchez « Tester la voix ».</p>
     <div class="bascules">${Voix.francaises().map(v => `<button class="bascule ${Voix.voix && Voix.voix.name === v.name ? 'oui' : ''}" data-cle="nomVoix" data-val="${echapper(v.name)}">${echapper(v.name)}</button>`).join('') || '<span class="note">Aucune voix française trouvée sur cet appareil.</span>'}</div>
     <p class="note"><b>Pour une voix plus naturelle :</b> sur iPad, Réglages → Accessibilité → Contenu énoncé → Voix → Français, puis téléchargez une voix « améliorée » ou « premium ». Sur Android, Paramètres → Synthèse vocale → moteur Google, puis installez les données vocales françaises en haute qualité. Revenez ensuite ici pour la choisir.</p>
+    <h3>Quand on touche une lettre, la voix dit</h3><div class="bascules">${bascule('lettres', 'nom', 'Son nom (« ème »)', r.lettres !== 'son')}${bascule('lettres', 'son', 'Le son qu’elle fait (« meu »)', r.lettres === 'son')}</div>
+    <p class="note">La syllabe entière est toujours dite normalement (« mo »).</p>
     <h3>Vitesse de la voix</h3><div class="bascules">${bascule('vitesse', 0.75, 'Lente', r.vitesseVoix === 0.75)}${bascule('vitesse', 0.9, 'Normale', r.vitesseVoix === 0.9)}${bascule('vitesse', 1.05, 'Rapide', r.vitesseVoix === 1.05)}</div>
-    <p><button class="btn-mini" id="test-voix">Tester la voix</button></p>`;
+    <p><button class="btn-mini" id="test-voix">Tester le son et la voix</button></p>
+    ${Voix.probleme() ? `<p class="alerte">${Voix.probleme()}</p>` : ''}`;
 }
 function brancherReglages() {
   const r = etat.reglages;
@@ -2677,6 +2724,7 @@ function brancherReglages() {
       case 'lecture':  r.lectureAuto = v === '1'; break;
       case 'sons':     r.sons = v === '1'; break;
       case 'vitesse':  r.vitesseVoix = Number(v); break;
+      case 'lettres':  r.lettres = v; Voix.dire(`La lettre ${direSon('m')}.`); break;
       case 'nomVoix':  r.nomVoix = v; Voix.choisir && Voix.choisir(); Voix.dire('Bonjour ! Je lis les consignes du jeu.'); break;
     }
     sauver();
@@ -2684,7 +2732,7 @@ function brancherReglages() {
     montrerParent();
     $('#parent-corps').scrollTop = y;
   }));
-  $('#test-voix').addEventListener('click', () => Voix.dire('Bonjour ! Je lis les consignes du jeu.'));
+  $('#test-voix').addEventListener('click', () => { Sons.activer(); Sons.jouer('joie'); Voix.amorcer('Bonjour ! Je lis les consignes du jeu.'); });
 }
 function pageApprend() {
   const jeux = jeuxDuNiveau();
@@ -2790,7 +2838,10 @@ function protegerTactile() {
   document.addEventListener('gesturestart', e => e.preventDefault());
   document.addEventListener('dblclick', e => e.preventDefault());
   document.addEventListener('touchmove', e => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
-  document.addEventListener('pointerdown', () => Sons.activer(), { once: true });
+  // Déblocage du son : on réessaie à chaque toucher tant que le téléphone ne l'a pas autorisé
+  const evts = ['pointerup', 'touchend', 'click', 'keydown'];
+  const debloquer = () => { Sons.activer(); if (Sons.pret()) evts.forEach(t => document.removeEventListener(t, debloquer, true)); };
+  evts.forEach(t => document.addEventListener(t, debloquer, true));
 }
 /* « Ajouter à l'écran d'accueil » : icône dessinée + manifeste générés à la volée */
 function preparerInstallation() {
@@ -2815,6 +2866,19 @@ function preparerInstallation() {
     }
   } catch (e) { /* facultatif */ }
 }
+/* Écran « Jouer » : le toucher sur ce bouton autorise les bruitages et la voix */
+function preparerDemarrage() {
+  $('#demarrer-gym').innerHTML = svgGymnaste(etat.profil.cree ? etat.profil : undefined, 'gym-svg');
+  const note = $('#demarrer-note');
+  const verifier = () => { const pb = Voix.probleme(); note.hidden = !pb; note.textContent = pb; };
+  verifier(); setTimeout(verifier, 2600);
+  $('#btn-demarrer').addEventListener('click', () => {
+    Sons.activer(); Sons.jouer('joie');
+    const crea = $('#ecran-creation.actif');
+    Voix.amorcer(crea ? Voix.dernier : (etat.profil.prenom ? `Bonjour ${etat.profil.prenom} !` : 'Bonjour !'));
+    $('#voile-demarrer').classList.remove('actif');
+  });
+}
 function demarrer() {
   document.title = CONFIG.nomAppli;
   $$('[data-ico]').forEach(e => { e.outerHTML = ICONES[e.dataset.ico]; });
@@ -2822,6 +2886,7 @@ function demarrer() {
   brancherBoutons();
   protegerTactile();
   preparerInstallation();
+  preparerDemarrage();
   if (!etat.profil.cree) ouvrirCreation(false);
   else allerAccueil();
 }
