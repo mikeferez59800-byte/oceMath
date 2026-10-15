@@ -6,13 +6,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Gym'Malin">
+<meta name="apple-mobile-web-app-title" content="OceMath">
 <meta name="theme-color" content="#1D4E89">
 <meta name="format-detection" content="telephone=no">
-<title>Gym'Malin</title>
+<title>OceMath</title>
 <!--
   ================================================================
-  GYM'MALIN — Application de maths et de français, du CP au CM2
+  OCEMATH — Application de maths et de français, du CP au CM2
   ================================================================
   Fichier unique, autonome, hors ligne, sans serveur ni compte.
 
@@ -118,6 +118,7 @@ button:disabled{opacity:.4;}
 .carte-agres .m{font-size:clamp(16px,2.4vmin,22px);color:var(--doux);font-weight:700;}
 .carte-agres.maths{border-color:var(--bleu-clair);}
 .carte-agres.francais{border-color:var(--orange-clair);}
+.carte-agres.foot{border-color:#D7EEDC;}
 
 /* ---------- Écran de jeu ---------- */
 .etoiles{display:flex;gap:1.2vmin;}
@@ -230,6 +231,16 @@ button:disabled{opacity:.4;}
 .ecoute-grand{width:clamp(96px,16vmin,150px);height:clamp(96px,16vmin,150px);border-radius:50%;background:var(--orange);color:#fff;font-size:clamp(44px,8vmin,76px);box-shadow:var(--ombre);}
 .ecoute-grand:active{transform:translateY(4px);box-shadow:none;}
 
+/* ---------- Le terrain de foot : tableau des scores ---------- */
+.scores{display:flex;gap:3vmin;justify-content:center;align-items:stretch;width:100%;max-width:820px;}
+.panneau-equipe{flex:1;min-width:0;max-width:380px;background:#fff;border:5px solid var(--eq);border-radius:26px;box-shadow:var(--ombre);
+  display:flex;flex-direction:column;align-items:center;gap:.6vmin;padding:1.6vmin 1.6vmin 2vmin;color:var(--encre);}
+button.panneau-equipe:active{transform:translateY(4px);box-shadow:none;}
+.panneau-equipe.bonne{background:var(--vert-clair);border-color:var(--vert);}
+.eq-maillot{width:clamp(56px,10vmin,96px);height:auto;}
+.eq-nom{font-size:clamp(22px,3.6vmin,36px);font-weight:700;color:var(--eq);}
+.eq-score{font-size:clamp(52px,10vmin,100px);font-weight:700;line-height:1;}
+.eq-ballons{width:100%;max-width:260px;height:auto;}
 /* ---------- Attrape la syllabe : cerceaux ---------- */
 .cerceaux{display:grid;gap:3vmin;width:100%;height:100%;align-content:center;justify-items:center;}
 .cerceau{width:clamp(130px,24vmin,230px);height:clamp(130px,24vmin,230px);border-radius:50%;border:clamp(10px,1.8vmin,16px) solid #7E57C2;background:#fff;
@@ -261,9 +272,13 @@ button:disabled{opacity:.4;}
 @keyframes figSalto{0%{transform:translateY(0) rotate(0)}15%{transform:translateY(5%) scaleY(.9)}55%{transform:translateY(-42%) rotate(-250deg)}85%{transform:translateY(0) rotate(-360deg)}100%{transform:translateY(0) rotate(-360deg)}}
 @keyframes figVrille{0%{transform:translateY(0) scaleX(1)}25%{transform:translateY(-28%) scaleX(-1)}50%{transform:translateY(-36%) scaleX(1)}75%{transform:translateY(-28%) scaleX(-1)}100%{transform:translateY(0) scaleX(1)}}
 @keyframes figEtoile{0%{transform:scale(1)}30%{transform:translateY(-26%) scale(1.18) rotate(-12deg)}60%{transform:translateY(-26%) scale(1.18) rotate(12deg)}100%{transform:translateY(0) scale(1) rotate(0)}}
+.fig-jongles{animation:figJongles 1.5s ease-in-out;}
+@keyframes figJongles{0%,100%{transform:translateY(0)}16%,50%,84%{transform:translateY(3%)}33%,67%{transform:translateY(-2%)}}
+.balle-jongle{animation:balleJongle 1.5s ease-in-out;}
+@keyframes balleJongle{0%{transform:translateY(0)}16%{transform:translateY(-40px)}33%{transform:translateY(0)}50%{transform:translateY(-46px)}67%{transform:translateY(0)}84%{transform:translateY(-40px)}100%{transform:translateY(0)}}
 .pop{animation:pop .35s ease-out;}
 @keyframes pop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
-@media (prefers-reduced-motion:reduce){.fig-saut,.fig-roulade,.fig-roue,.fig-salto,.fig-vrille,.fig-etoile{animation-duration:.01s;}}
+@media (prefers-reduced-motion:reduce){.fig-jongles,.balle-jongle,.fig-saut,.fig-roulade,.fig-roue,.fig-salto,.fig-vrille,.fig-etoile{animation-duration:.01s;}}
 
 /* ---------- Voiles (bravo, médaille, continuer) ---------- */
 .voile{position:absolute;inset:0;background:rgba(255,247,236,.94);display:none;align-items:center;justify-content:center;z-index:20;flex-direction:column;gap:2vmin;}
@@ -277,6 +292,7 @@ button:disabled{opacity:.4;}
 
 #voile-demarrer{position:fixed;z-index:50;background:var(--fond);padding:4vmin;}
 #voile-demarrer .gym-svg{height:min(40vh,55vw);}
+.demarrer-nom{font-size:var(--titre);font-weight:700;color:var(--bleu);}
 #btn-demarrer{min-width:min(70vw,360px);}
 .demarrer-note{max-width:560px;margin:0;font-size:clamp(15px,2.2vmin,19px);color:var(--doux);text-align:center;line-height:1.35;background:#fff;border-radius:16px;padding:10px 16px;}
 /* ---------- Médaille, pause, fin ---------- */
@@ -385,6 +401,11 @@ button:disabled{opacity:.4;}
   .ecoute-grand{width:64px;height:64px;font-size:32px;}
   .cerceau{width:clamp(80px,24vmin,110px);height:clamp(80px,24vmin,110px);border-width:8px;font-size:clamp(30px,10vmin,42px);}
   .cerceaux{gap:10px;}
+  .scores{gap:8px;}
+  .panneau-equipe{border-width:4px;border-radius:18px;padding:8px 6px 10px;gap:2px;}
+  .eq-maillot{width:44px;}
+  .eq-nom{font-size:18px;}
+  .eq-score{font-size:44px;}
   .voile .gym-svg{height:min(36vh,36vw);}
   .bravo-texte{font-size:clamp(32px,10vmin,48px);}
   .bravo-sous{font-size:18px;}
@@ -485,6 +506,7 @@ button:disabled{opacity:.4;}
 
 <!-- Démarrage : un premier toucher est obligatoire pour que le téléphone autorise le son -->
 <div class="voile actif" id="voile-demarrer">
+  <div class="demarrer-nom" id="demarrer-nom"></div>
   <div id="demarrer-gym"></div>
   <button class="btn vert grand" id="btn-demarrer"><span data-ico="haut"></span> Jouer</button>
   <p class="demarrer-note" id="demarrer-note" hidden></p>
@@ -523,6 +545,7 @@ button:disabled{opacity:.4;}
   <div class="rangee" id="agres-matieres" style="padding:0 4vmin 2vmin">
     <button class="btn" data-matiere="maths">Nombres</button>
     <button class="btn blanc" data-matiere="francais">Lecture</button>
+    <button class="btn blanc" data-matiere="foot">Foot</button>
   </div>
   <div class="grille-agres" id="grille-agres"></div>
 </section>
@@ -648,13 +671,13 @@ button:disabled{opacity:.4;}
    1. CONFIGURATION — tout ce qui se modifie facilement est ici
    ===================================================================== */
 
-/* ---------- NOM DE L'APPLI (provisoire) ---------- */
+/* ---------- NOM DE L'APPLI ---------- */
 const CONFIG = {
-  nomAppli: "Gym'Malin",       // ← changer le nom ici (et dans <title> en haut du fichier)
+  nomAppli: "OceMath",         // ← changer le nom ici (et dans <title> en haut du fichier)
   questionsParSerie: 5,        // une série = 5 questions
   seriesAvantPause: 3,         // pause échauffement toutes les 3 séries
   dureePauseSecondes: 30,      // durée du compte à rebours de la pause
-  cleSauvegarde: 'gymmalin-sauvegarde-v1',
+  cleSauvegarde: 'gymmalin-sauvegarde-v1',  // ne pas changer : c'est ce qui garde la progression déjà enregistrée
 };
 
 /* ---------- ORDRE DES SONS (lecture) ----------
@@ -771,6 +794,10 @@ const AGRES = {
   barres:     { nom:'Les barres',    icone:'barres' },
   anneaux:    { nom:'Les anneaux',   icone:'anneaux' },
   saut:       { nom:'La table de saut', icone:'saut' },
+  // Le terrain de foot du club (onglet « Foot »)
+  but:        { nom:'Les tirs au but',       icone:'but' },
+  tableau:    { nom:'Le tableau des scores', icone:'tableau' },
+  terrain:    { nom:'Les passes',            icone:'terrain' },
 };
 
 /* ---------- RÉCOMPENSES : débloquées avec les points de médailles ----------
@@ -781,6 +808,7 @@ const RECOMPENSES = {
     { id:'justaucorps', nom:'Justaucorps',        points:0 },
     { id:'shortTee',    nom:'Short et tee-shirt', points:0 },
     { id:'combinaison', nom:'Combinaison étoilée',points:6 },
+    { id:'foot',        nom:'Maillot de foot',    points:8 },
     { id:'eclair',      nom:'Tenue éclair',       points:14 },
     { id:'champion',    nom:'Tenue de champion',  points:26 },
   ],
@@ -788,6 +816,7 @@ const RECOMPENSES = {
     { id:'aucun',    nom:'Aucun',              points:0 },
     { id:'bandeau',  nom:'Bandeau',            points:3 },
     { id:'poignets', nom:'Serre-poignets',     points:9 },
+    { id:'ballon',   nom:'Ballon de foot',     points:12 },
     { id:'lauriers', nom:'Couronne de laurier',points:17 },
     { id:'lunettes', nom:'Lunettes étoiles',   points:22 },
     { id:'cape',     nom:'Cape de super gymnaste', points:32 },
@@ -797,6 +826,7 @@ const RECOMPENSES = {
     { id:'roulade', nom:'La roulade',  points:0 },
     { id:'roue',    nom:'La roue',     points:4 },
     { id:'salto',   nom:'Le salto',    points:11 },
+    { id:'jongles', nom:'Les jongles', points:15 },
     { id:'vrille',  nom:'La vrille',   points:19 },
     { id:'etoile',  nom:'Le saut étoile', points:29 },
   ],
@@ -989,6 +1019,7 @@ const Sons = {
           for (let i = 0; i < 46; i++) this.bruit(0.9 + Math.random() * 1.5, 0.05 + Math.random() * 0.04, 0.25 + Math.random() * 0.25);
           break;
         case 'tic': this.note(880, 0, 0.05, 'sine', 0.05); break;
+        case 'tir': this.bruit(0, 0.07, 0.5); this.note(150, 0, 0.12, 'sine', 0.2); break; // coup de pied dans le ballon
       }
     } catch (e) { /* le son n'est jamais bloquant */ }
   },
@@ -1084,6 +1115,12 @@ function tenueSVG(tenue, col, fonce) {
            + `<path d="M42 58 Q60 54 78 58 L84 70 L75 73 L74 94 L46 94 L45 73 L36 70 Z" fill="${col}"/>`;
     case 'combinaison':
       return corps + `<polygon points="${pointsEtoile(60, 78, 7, 3)}" fill="#fff"/><polygon points="${pointsEtoile(52, 132, 4, 1.8)}" fill="#fff"/><polygon points="${pointsEtoile(68, 120, 4, 1.8)}" fill="#fff"/>`;
+    case 'foot': // maillot à manches courtes avec le numéro 10, short et chaussettes
+      return `<rect x="47" y="128" width="12" height="22" rx="4" fill="${col}"/><rect x="61" y="128" width="12" height="22" rx="4" fill="${col}"/>`
+           + `<path d="M46 90 L74 90 L76 112 L62 112 L60 104 L58 112 L44 112 Z" fill="#fff" stroke="#C9CED8" stroke-width="1.5"/>`
+           + `<path d="M42 58 Q60 54 78 58 L84 70 L75 73 L74 94 L46 94 L45 73 L36 70 Z" fill="${col}"/>`
+           + `<path d="M54 57 L60 64 L66 57" stroke="#fff" stroke-width="2.5" fill="none"/>`
+           + `<text x="60" y="86" font-size="15" font-weight="700" fill="#fff" text-anchor="middle" font-family="Andika, sans-serif">10</text>`;
     case 'eclair':
       return corps + `<polygon points="63,61 52,80 60,80 54,99 70,76 62,76 68,61" fill="#F6C83B"/>`;
     case 'champion':
@@ -1097,9 +1134,30 @@ function accessoireSVG(a) {
     case 'bandeau':  return `<path d="M40.5 27 Q60 17 79.5 27 L79.5 32 Q60 22 40.5 32 Z" fill="#E8711A"/>`;
     case 'poignets': return `<circle cx="28" cy="31" r="6.5" fill="#fff" stroke="#1D4E89" stroke-width="2.5"/><circle cx="92" cy="31" r="6.5" fill="#fff" stroke="#1D4E89" stroke-width="2.5"/>`;
     case 'lauriers': return [[42,24,-50],[47,17,-30],[54,13,-10],[66,13,10],[73,17,30],[78,24,50]].map(([x, y, r]) => `<ellipse cx="${x}" cy="${y}" rx="3.2" ry="6.5" transform="rotate(${r} ${x} ${y})" fill="#3E9B4F"/>`).join('');
+    case 'ballon':   return svgBallon(98, 150, 11);
     case 'lunettes': return `<polygon points="${pointsEtoile(53, 35, 8, 4)}" fill="#E8711A"/><polygon points="${pointsEtoile(67, 35, 8, 4)}" fill="#E8711A"/><path d="M58 34 L62 34" stroke="#1F2A44" stroke-width="2"/>`;
     default: return '';
   }
+}
+/* Ballon de foot (dessin original) centré en (x, y), de rayon r */
+function svgBallon(x, y, r) {
+  const pent = (cx, cy, R, rot) => [...Array(5).keys()].map(i => { const a = (rot + i * 72) * Math.PI / 180; return (cx + R * Math.cos(a)).toFixed(1) + ',' + (cy + R * Math.sin(a)).toFixed(1); }).join(' ');
+  let s = `<g class="ballon"><circle cx="${x}" cy="${y}" r="${r}" fill="#fff" stroke="#1F2A44" stroke-width="${(r * 0.1).toFixed(1)}"/>`;
+  s += `<polygon points="${pent(x, y, r * 0.36, -90)}" fill="#1F2A44"/>`;
+  for (let i = 0; i < 5; i++) {
+    const a = (-90 + i * 72) * Math.PI / 180;
+    s += `<line x1="${(x + r * 0.36 * Math.cos(a)).toFixed(1)}" y1="${(y + r * 0.36 * Math.sin(a)).toFixed(1)}" x2="${(x + r * 0.78 * Math.cos(a)).toFixed(1)}" y2="${(y + r * 0.78 * Math.sin(a)).toFixed(1)}" stroke="#1F2A44" stroke-width="${(r * 0.08).toFixed(1)}"/>`;
+    s += `<polygon points="${pent(x + r * 0.86 * Math.cos(a), y + r * 0.86 * Math.sin(a), r * 0.16, -90 + i * 72)}" fill="#1F2A44"/>`;
+  }
+  return s + `</g>`;
+}
+/* Maillot de foot : centré en x, haut du col en y, largeur w, avec un numéro */
+function svgMaillot(x, y, w, coul, num, coulNum = '#fff') {
+  const k = w / 100, X = v => (x - w / 2 + v * k).toFixed(1), Y = v => (y + v * k).toFixed(1);
+  const pts = [[30,0],[70,0],[100,22],[87,42],[78,36],[78,100],[22,100],[22,36],[13,42],[0,22]].map(([a, b]) => X(a) + ',' + Y(b)).join(' ');
+  return `<polygon points="${pts}" fill="${coul}" stroke="${assombrir(coul, 0.3)}" stroke-width="${(3 * k).toFixed(1)}" stroke-linejoin="round"/>`
+    + `<path d="M${X(38)} ${Y(0)} L${X(50)} ${Y(12)} L${X(62)} ${Y(0)}" stroke="#fff" stroke-width="${(4 * k).toFixed(1)}" fill="none"/>`
+    + `<text x="${x}" y="${Y(76)}" font-size="${((String(num).length > 2 ? 32 : 44) * k).toFixed(1)}" font-weight="700" fill="${coulNum}" text-anchor="middle" font-family="Andika, sans-serif">${num}</text>`;
 }
 /* Le gymnaste (personnage original), paramétré par le profil */
 function svgGymnaste(p = etat.profil, cls = '') {
@@ -1199,6 +1257,9 @@ function svgAgres(type) {
     barres: `<line x1="18" y1="88" x2="18" y2="22" stroke="#56607A" stroke-width="5"/><line x1="82" y1="88" x2="82" y2="44" stroke="#56607A" stroke-width="5"/><line x1="12" y1="22" x2="62" y2="22" stroke="#C98B4A" stroke-width="7" stroke-linecap="round"/><line x1="40" y1="44" x2="90" y2="44" stroke="#C98B4A" stroke-width="7" stroke-linecap="round"/><line x1="38" y1="88" x2="38" y2="22" stroke="#56607A" stroke-width="5"/><line x1="62" y1="88" x2="62" y2="44" stroke="#56607A" stroke-width="5"/>`,
     anneaux: `<line x1="10" y1="8" x2="90" y2="8" stroke="#56607A" stroke-width="6"/><line x1="32" y1="8" x2="32" y2="52" stroke="#C98B4A" stroke-width="4"/><line x1="68" y1="8" x2="68" y2="52" stroke="#C98B4A" stroke-width="4"/><circle cx="32" cy="66" r="14" fill="none" stroke="#1F2A44" stroke-width="6"/><circle cx="68" cy="66" r="14" fill="none" stroke="#1F2A44" stroke-width="6"/>`,
     saut: `<rect x="14" y="30" width="72" height="18" rx="9" fill="#2F6FD0"/><polygon points="40,48 60,48 64,78 36,78" fill="#56607A"/><rect x="26" y="78" width="48" height="8" rx="4" fill="#56607A"/>`,
+    but: `<path d="M12 84 V26 H88 V84" fill="none" stroke="#1F2A44" stroke-width="6" stroke-linejoin="round"/>` + [26, 40, 54, 68].map(y => `<line x1="15" y1="${y}" x2="85" y2="${y}" stroke="#9FB6D6" stroke-width="2"/>`).join('') + [30, 50, 70].map(x => `<line x1="${x}" y1="29" x2="${x}" y2="84" stroke="#9FB6D6" stroke-width="2"/>`).join('') + svgBallon(62, 70, 13),
+    tableau: `<rect x="8" y="22" width="84" height="56" rx="8" fill="#1F2A44"/><rect x="16" y="32" width="30" height="36" rx="5" fill="#2F6FD0"/><rect x="54" y="32" width="30" height="36" rx="5" fill="#D6453D"/><text x="31" y="59" font-size="24" font-weight="700" fill="#fff" text-anchor="middle" font-family="Andika, sans-serif">2</text><text x="69" y="59" font-size="24" font-weight="700" fill="#fff" text-anchor="middle" font-family="Andika, sans-serif">1</text><rect x="30" y="78" width="6" height="12" fill="#56607A"/><rect x="64" y="78" width="6" height="12" fill="#56607A"/>`,
+    terrain: `<rect x="6" y="20" width="88" height="60" rx="6" fill="#3E9B4F"/><rect x="10" y="24" width="80" height="52" fill="none" stroke="#fff" stroke-width="2.5"/><line x1="50" y1="24" x2="50" y2="76" stroke="#fff" stroke-width="2.5"/><circle cx="50" cy="50" r="11" fill="none" stroke="#fff" stroke-width="2.5"/>` + svgBallon(70, 58, 8),
     cerceau: `<circle cx="50" cy="50" r="34" fill="none" stroke="#7E57C2" stroke-width="10"/><path d="M22 30 L30 22 M70 22 L78 30 M78 70 L70 78 M30 78 L22 70" stroke="#F6C83B" stroke-width="6"/>`,
   }[type] || '';
   return `<svg viewBox="0 0 100 100" aria-hidden="true">${d}</svg>`;
@@ -2457,6 +2518,289 @@ enregistrerJeu({
 });
 
 /* =====================================================================
+   LE TERRAIN DE FOOT DU CLUB (onglet « Foot ») : 3 jeux de calcul
+   Deux couleurs d'équipe seulement, pas de public, rien ne bouge
+   pendant que l'enfant réfléchit (le ballon ne part que s'il touche).
+   ===================================================================== */
+enregistrerCompetence('cp-foot-ajouter', 'Ajouter des buts', 'Additionner en ajoutant des buts à un score : d’abord en tirant les ballons un par un et en comptant à partir du score, puis de tête.', 'CP');
+enregistrerCompetence('cp-foot-scores',  'Comparer des scores', 'Dire quelle équipe a gagné, puis de combien de buts (l’écart entre deux nombres).', 'CP');
+enregistrerCompetence('cp-suite',        'La suite des nombres', 'Trouver le nombre qui manque dans une suite : en avançant, à l’envers, de 2 en 2, de 10 en 10.', 'CP');
+const EQUIPES = { b: { nom:'Bleus', coul:'#2F6FD0' }, r: { nom:'Rouges', coul:'#D6453D' } };
+const pluriel = (n, mot) => `${n} ${mot}${n > 1 ? 's' : ''}`;
+
+/* Petit outil d'animation : déplace un groupe SVG en cloche, puis rappelle fin() */
+function lancerBallon(el, x0, y0, x1, y1, hauteur, duree, fin) {
+  const t0 = performance.now();
+  const etape = t => {
+    const k = Math.min(1, (t - t0) / duree);
+    el.setAttribute('transform', `translate(${x0 + (x1 - x0) * k},${y0 + (y1 - y0) * k - Math.sin(Math.PI * k) * hauteur})`);
+    if (k < 1) requestAnimationFrame(etape); else fin && fin();
+  };
+  requestAnimationFrame(etape);
+}
+
+/* ---------------------------------------------------------------------
+   JEU 11 — LES TIRS AU BUT (ajouter) : on tire les ballons dans le filet
+   Le filet est rangé par 5 (comme une boîte de 10) pour voir les quantités.
+   --------------------------------------------------------------------- */
+enregistrerJeu({
+  id:'tirs', nom:'Les tirs au but', niveau:'CP', matiere:'maths', univers:'foot', agres:'but', competence:'cp-foot-ajouter',
+  disposition:'deux',
+  paliers: [
+    { nom:'Ajouter 1 ou 2 buts (jusqu’à 5) en tirant les ballons',   periode:1, somme:5,  bMax:2, tirs:'tirer' },
+    { nom:'Ajouter jusqu’à 4 buts (jusqu’à 10) en tirant les ballons', periode:1, somme:10, bMax:4, tirs:'tirer' },
+    { nom:'Ajouter jusqu’à 5 buts (jusqu’à 10) en regardant',         periode:1, somme:10, bMax:5, tirs:'voir' },
+    { nom:'Additions jusqu’à 10 de tête',                              periode:2, somme:10, bMax:6, tirs:'non' },
+    { nom:'Additions jusqu’à 20 de tête',                              periode:3, somme:20, bMax:9, tirs:'non' },
+  ],
+  generer(p) {
+    const b = rnd(1, p.bMax), a = rnd(1, Math.max(1, p.somme - b));
+    return { a, b, s: a + b, tirs: p.tirs, grand: a + b > 10, cle: a + '+' + b };
+  },
+  consigne: q => ({ texte: 'Combien de buts en tout ?',
+    voix: `L’équipe a déjà ${pluriel(q.a, 'but')}. Elle marque encore ${q.b}. Combien de buts en tout ?${q.tirs === 'tirer' ? ' Touche Tirer.' : ''}` }),
+  /* Géométrie : 5 places par rangée dans le filet, ballons à tirer en bas */
+  geo(q) {
+    const rangs = q.grand ? 4 : 2, sol = 52 + rangs * 58 + 8;
+    return { rangs, sol, H: sol + 112, place: i => ({ x: 176 + (i % 5) * 62, y: 81 + Math.floor(i / 5) * 58 + (i >= 10 ? 6 : 0) }),
+      attente: i => ({ x: 300 - (q.b - 1) * 29 + i * 58, y: sol + 62 }) };
+  },
+  butSVG(q, tires, solution) {
+    const G = this.geo(q);
+    const x0 = Math.min(116, 300 - (q.b - 1) * 29 - 40), W = 600 - 2 * x0; // on cadre sur le but : plus gros sur petit écran
+    let s = `<rect x="${x0}" y="${G.sol}" width="${W}" height="${G.H - G.sol}" rx="18" fill="#E3F2E6"/>`;
+    for (let x = 160; x <= 440; x += 31) s += `<line x1="${x}" y1="46" x2="${x}" y2="${G.sol}" stroke="#C9CED8" stroke-width="2"/>`;
+    for (let y = 75; y < G.sol; y += 29) s += `<line x1="144" y1="${y}" x2="456" y2="${y}" stroke="#C9CED8" stroke-width="2"/>`;
+    s += `<path d="M140 ${G.sol} V42 H460 V${G.sol}" fill="none" stroke="#1F2A44" stroke-width="10" stroke-linejoin="round"/>`;
+    const dedans = solution ? q.s : q.a + tires;
+    for (let i = 0; i < dedans; i++) {
+      const { x, y } = G.place(i), ajoute = i >= q.a, coul = solution ? '#23804D' : '#D9620F';
+      s += svgBallon(x, y, 24);
+      if (ajoute) s += `<circle cx="${x}" cy="${y}" r="27" fill="none" stroke="${coul}" stroke-width="4"/><circle cx="${x + 21}" cy="${y - 21}" r="13" fill="${coul}"/><text x="${x + 21}" y="${y - 20}" font-size="17" font-weight="700" fill="#fff" text-anchor="middle" dominant-baseline="central">${i + 1}</text>`;
+    }
+    if (!solution) for (let i = tires; i < q.b; i++) { const { x, y } = G.attente(i); s += `<g id="att-${i}">${svgBallon(x, y, 24)}</g>`; }
+    return `<svg class="svg-scene" id="but" viewBox="${x0} 20 ${W} ${G.H - 20}" preserveAspectRatio="xMidYMid meet">${s}</svg>`;
+  },
+  afficher(q, scene, rep, api) {
+    q.tires = 0; q.anim = false;
+    scene.innerHTML = `<div class="scene-col"><div class="calcul">${q.a} + ${q.b} = <span class="trou" id="trou">?</span></div>
+      <div id="zone-but" style="width:100%;flex:1;min-height:0;display:flex;justify-content:center"></div>
+      <div class="rangee" id="ctrl-tir" style="align-items:center"><button class="btn orange" id="btn-tir">${svgIcoBallon()} Tirer</button></div></div>`;
+    this.montrerBut(q, q.tirs);
+    $('#btn-tir', scene).addEventListener('click', () => this.tirer(q, api));
+    api.pave(rep, { max: 2 });
+  },
+  montrerBut(q, mode) {
+    const z = $('#zone-but'), c = $('#ctrl-tir');
+    if (mode === 'non') { z.innerHTML = `<div style="width:min(40%,200px)">${svgAgres('but')}</div>`; c.style.display = 'none'; return; }
+    z.innerHTML = this.butSVG(q, q.tires, false);
+    c.style.display = mode === 'tirer' ? 'flex' : 'none';
+  },
+  /* Un tir : le ballon le plus à gauche part dans la place libre du filet */
+  tirer(q, api, fin) {
+    if (q.anim || q.tires >= q.b || api.verrouille) { fin && fin(); return; }
+    const G = this.geo(q), el = $('#att-' + q.tires);
+    if (!el) { fin && fin(); return; }
+    q.anim = true; api.son('tir');
+    const de = G.attente(q.tires), vers = G.place(q.a + q.tires);
+    lancerBallon(el, 0, 0, vers.x - de.x, vers.y - de.y, 60, 420, () => {
+      q.tires++; q.anim = false;
+      $('#zone-but').innerHTML = this.butSVG(q, q.tires, false);
+      api.dire(String(q.a + q.tires)); // on compte à partir du score : 4… 5…
+      if (q.tires >= q.b) $('#btn-tir').disabled = true;
+      fin && fin();
+    });
+  },
+  verifier: (q, v) => Number(v) === q.s,
+  indice(q) {
+    if (q.tirs !== 'tirer') { q.tirs = 'tirer'; q.tires = 0; this.montrerBut(q, 'tirer'); $('#btn-tir').disabled = false; }
+    return { texte: `Pars de ${q.a} et compte chaque but que tu marques.`, voix: `Il y a déjà ${q.a} buts. Tire les ballons et compte à partir de ${q.a}.` };
+  },
+  solution(q) {
+    $('#ctrl-tir').style.display = 'none';
+    $('#zone-but').innerHTML = this.butSVG(q, q.b, true);
+    const t = $('#trou'); t.textContent = q.s; t.classList.add('rempli');
+    const suite = [...Array(q.b).keys()].map(i => q.a + i + 1).join(', ');
+    return `${q.a} + ${q.b} = ${q.s}. On part de ${q.a} et on compte : ${suite}.`;
+  },
+  bravo(q) { const t = $('#trou'); if (t) { t.textContent = q.s; t.classList.add('rempli'); } },
+});
+/* Petit ballon pour le bouton « Tirer » */
+const svgIcoBallon = () => `<svg class="ico" viewBox="0 0 48 48" aria-hidden="true" style="stroke:none">${svgBallon(24, 24, 20)}</svg>`;
+
+/* ---------------------------------------------------------------------
+   JEU 12 — LE TABLEAU DES SCORES (comparer) : qui a gagné ? de combien ?
+   --------------------------------------------------------------------- */
+enregistrerJeu({
+  id:'scores', nom:'Le tableau des scores', niveau:'CP', matiere:'maths', univers:'foot', agres:'tableau', competence:'cp-foot-scores',
+  disposition: q => q.mode === 'gagne' ? 'plein' : 'deux',
+  paliers: [
+    { nom:'Qui a gagné ? (jusqu’à 5 buts, avec les ballons)',        periode:1, mode:'gagne',  min:0,  max:5,  nul:false, ballons:true },
+    { nom:'Qui a gagné ? (jusqu’à 10, match nul possible)',          periode:1, mode:'gagne',  min:0,  max:10, nul:true,  ballons:true },
+    { nom:'Combien de buts de plus ? (jusqu’à 10, avec les ballons)', periode:2, mode:'avance', min:0,  max:10, ballons:true },
+    { nom:'Qui a gagné ? (scores jusqu’à 20)',                       periode:2, mode:'gagne',  min:0,  max:20, nul:true,  ballons:false },
+    { nom:'Combien de buts de plus ? (jusqu’à 20, de tête)',          periode:3, mode:'avance', min:0,  max:20, ballons:false },
+    { nom:'Qui a le plus de points ? (jusqu’à 100)',                 periode:4, mode:'gagne',  min:10, max:99, nul:true,  ballons:false },
+  ],
+  generer(p) {
+    let b = rnd(p.min, p.max), r = rnd(p.min, p.max);
+    const egal = p.mode === 'gagne' && p.nul && Math.random() < 0.2;
+    if (egal) r = b;
+    else {
+      while (r === b) r = rnd(p.min, p.max);
+      if (p.mode === 'avance' && Math.abs(b - r) > 6) r = b > r ? b - rnd(1, 6) : b + rnd(1, 6);
+      if (p.max > 20 && Math.random() < 0.4) { const r2 = Math.min(p.max, Math.floor(b / 10) * 10 + rnd(0, 9)); if (r2 !== b) r = r2; } // même dizaine : plus difficile
+      if (r === b) r = b === p.max ? b - 1 : b + 1;
+    }
+    const bonne = b > r ? 'b' : r > b ? 'r' : '=';
+    return { b, r, bonne, ecart: Math.abs(b - r), mode: p.mode, ballons: p.ballons, nul: !!p.nul, cle: b + '-' + r };
+  },
+  gagnant: q => q.bonne === '=' ? null : EQUIPES[q.bonne],
+  consigne(q) {
+    const score = `Les Bleus ont ${pluriel(q.b, 'but')}. Les Rouges ont ${pluriel(q.r, 'but')}.`;
+    if (q.mode === 'gagne') return { texte: 'Qui a gagné ?', voix: `${score} Qui a gagné ? Touche l’équipe${q.nul ? ', ou Match nul si c’est pareil' : ''}.` };
+    const g = this.gagnant(q).nom;
+    return { texte: `Combien de buts de plus pour les ${g} ?`, voix: `${score} Combien de buts de plus pour les ${g} ?` };
+  },
+  /* Ballons d'une équipe rangés par 5 ; marque : null | 'paires' (les ballons appariés s'effacent) */
+  ballonsSVG(n, autre, marque) {
+    if (!n) return `<svg class="eq-ballons" viewBox="0 0 300 56"></svg>`;
+    const rangs = Math.ceil(n / 5);
+    let s = '';
+    for (let i = 0; i < n; i++) {
+      const x = 30 + (i % 5) * 60, y = 28 + Math.floor(i / 5) * 58, paire = marque && i < autre;
+      s += `<g opacity="${paire ? 0.25 : 1}">${svgBallon(x, y, 24)}</g>`;
+      if (marque && !paire) s += `<circle cx="${x}" cy="${y}" r="27" fill="none" stroke="${marque === 'solution' ? '#23804D' : '#D9620F'}" stroke-width="4"/>`;
+    }
+    return `<svg class="eq-ballons" viewBox="0 0 300 ${rangs * 58}">${s}</svg>`;
+  },
+  panneaux(q, ballons, marque) {
+    const pan = (k, n, autre) => {
+      const e = EQUIPES[k], tag = q.mode === 'gagne' ? 'button' : 'div';
+      return `<${tag} class="panneau-equipe" data-r="${k}" style="--eq:${e.coul}">
+        <svg class="eq-maillot" viewBox="0 0 100 104">${svgMaillot(50, 2, 96, e.coul, '')}</svg>
+        <span class="eq-nom">${e.nom}</span><span class="eq-score">${n}</span>
+        ${ballons ? this.ballonsSVG(n, autre, marque) : ''}</${tag}>`;
+    };
+    return `<div class="scores">${pan('b', q.b, q.r)}${pan('r', q.r, q.b)}</div>`;
+  },
+  afficher(q, scene, rep, api) {
+    scene.innerHTML = `<div class="scene-col"><div id="zone-scores" style="width:100%;display:flex;justify-content:center">${this.panneaux(q, q.ballons, null)}</div>
+      ${q.mode === 'gagne' && q.nul ? `<button class="btn-choix" data-r="=" style="font-size:clamp(26px,4.6vmin,44px)">Match nul</button>` : ''}</div>`;
+    this.brancher(q, api);
+    if (q.mode === 'avance') api.pave(rep, { max: 2 });
+  },
+  brancher(q, api) { if (q.mode === 'gagne') $$('#scene [data-r]').forEach(b => b.addEventListener('click', () => api.repondre(b.dataset.r))); },
+  verifier: (q, v) => q.mode === 'gagne' ? v === q.bonne : Number(v) === q.ecart,
+  indice(q, api) {
+    const peuDeButs = Math.max(q.b, q.r) <= 20;
+    if (peuDeButs) { $('#zone-scores').innerHTML = this.panneaux(q, true, 'paires'); this.brancher(q, api); }
+    if (q.mode === 'gagne') {
+      if (peuDeButs) return { texte: 'Les ballons qui n’ont pas de partenaire montrent qui a le plus.', voix: 'Regarde : on associe les ballons deux par deux. Les ballons en plus montrent l’équipe qui a gagné.' };
+      return { texte: 'Regarde d’abord les dizaines.', voix: `Lequel est le plus grand : ${q.b} ou ${q.r} ? Regarde d’abord les dizaines.` };
+    }
+    return { texte: 'Compte les ballons entourés : ce sont les buts en plus.', voix: 'On associe les ballons deux par deux. Compte les ballons qui restent : ce sont les buts en plus.' };
+  },
+  solution(q) {
+    if (Math.max(q.b, q.r) <= 20) $('#zone-scores').innerHTML = this.panneaux(q, true, 'solution');
+    $$('#scene .panneau-equipe').forEach(p => p.classList.toggle('bonne', p.dataset.r === q.bonne));
+    const nul = $('#scene [data-r="="]'); if (nul) nul.classList.toggle('bonne', q.bonne === '=');
+    const g = this.gagnant(q), grand = Math.max(q.b, q.r), petit = Math.min(q.b, q.r);
+    if (q.mode === 'gagne') return g ? `Les ${g.nom} ont gagné : ${grand}, c’est plus que ${petit}.` : `Match nul : ${q.b} partout !`;
+    return `${grand} − ${petit} = ${q.ecart}. Les ${g.nom} ont ${pluriel(q.ecart, 'but')} de plus.`;
+  },
+  bravo(q) {
+    $$('#scene .panneau-equipe').forEach(p => p.classList.toggle('bonne', p.dataset.r === q.bonne));
+    const nul = $('#scene [data-r="="]'); if (nul) nul.classList.toggle('bonne', q.bonne === '=');
+  },
+});
+
+/* ---------------------------------------------------------------------
+   JEU 13 — LES PASSES (suite des nombres) : un maillot a perdu son numéro
+   Le ballon passe de joueur en joueur et la voix dit chaque numéro.
+   --------------------------------------------------------------------- */
+enregistrerJeu({
+  id:'passes', nom:'Les passes', niveau:'CP', matiere:'maths', univers:'foot', agres:'terrain', competence:'cp-suite',
+  disposition:'deux',
+  paliers: [
+    { nom:'Avancer de 1 jusqu’à 10, avec les passes',          periode:1, pas:1,  min:0,  max:10,  passes:true },
+    { nom:'Reculer de 1 à partir de 10, avec les passes',       periode:1, pas:-1, min:0,  max:10,  passes:true },
+    { nom:'Avancer de 1 jusqu’à 30',                            periode:2, pas:1,  min:5,  max:30,  passes:false },
+    { nom:'De 2 en 2 jusqu’à 20',                               periode:3, pas:2,  min:0,  max:20,  passes:false },
+    { nom:'De 10 en 10 jusqu’à 100',                            periode:3, pas:10, min:0,  max:100, passes:false },
+    { nom:'Avancer de 1 jusqu’à 100 en passant la dizaine',     periode:4, pas:1,  min:20, max:100, passes:false, dizaine:true },
+  ],
+  generer(p) {
+    let debut, idx = rnd(1, 4);
+    if (p.dizaine) { const d = rnd(3, 9) * 10; idx = rnd(1, 4); debut = d - idx; }
+    else if (p.pas < 0) debut = rnd(p.min + 4, p.max);
+    else debut = rnd(Math.ceil(p.min / p.pas), Math.floor((p.max - 4 * p.pas) / p.pas)) * p.pas;
+    const nums = [...Array(5).keys()].map(i => debut + i * p.pas);
+    return { nums, idx, manque: nums[idx], pas: p.pas, passes: p.passes, dizaine: !!p.dizaine, cle: debut + '/' + idx };
+  },
+  consigne(q) {
+    const avant = q.nums.slice(0, q.idx).join(', '), apres = q.nums.slice(q.idx + 1).join(', ');
+    const fin = apres ? `… puis ${apres}. Quel numéro manque ?` : `… Quel numéro vient ensuite ?`;
+    return { texte: 'Quel numéro manque ?', voix: `Les numéros des joueurs : ${avant}${fin}${q.passes ? ' Touche Passe pour faire tourner le ballon.' : ''}` };
+  },
+  x: i => 70 + i * 115,
+  terrainSVG(q, etat) { // etat : { balle, pasVisibles, solution }
+    let s = `<rect x="0" y="40" width="600" height="250" rx="22" fill="#E3F2E6"/><line x1="300" y1="40" x2="300" y2="290" stroke="#fff" stroke-width="5"/><circle cx="300" cy="165" r="56" fill="none" stroke="#fff" stroke-width="5"/>`;
+    const signe = q.pas > 0 ? '+' + q.pas : '−' + (-q.pas);
+    for (let i = 0; i < 4; i++) {
+      const x0 = this.x(i) + 22, x1 = this.x(i + 1) - 22, faite = etat.balle > i || etat.solution;
+      if (faite || etat.pasVisibles) s += `<path d="M${x0} 246 Q${(x0 + x1) / 2} 196 ${x1} 246" stroke="${faite ? '#D9620F' : '#9FB6D6'}" stroke-width="4" fill="none" stroke-dasharray="8 7"/>`;
+      if (etat.pasVisibles || etat.solution) s += `<text x="${(x0 + x1) / 2}" y="206" font-size="30" font-weight="700" text-anchor="middle" fill="#D9620F">${signe}</text>`;
+    }
+    q.nums.forEach((n, i) => {
+      const trou = i === q.idx;
+      if (trou && !etat.solution) s += svgMaillot(this.x(i), 66, 96, '#FFFFFF', '?', '#D9620F') + `<polygon points="${[[30,0],[70,0],[100,22],[87,42],[78,36],[78,100],[22,100],[22,36],[13,42],[0,22]].map(([a, b]) => (this.x(i) - 48 + a * .96).toFixed(1) + ',' + (66 + b * .96).toFixed(1)).join(' ')}" fill="none" stroke="#D9620F" stroke-width="4" stroke-dasharray="9 7" stroke-linejoin="round"/>`;
+      else s += svgMaillot(this.x(i), 66, 96, trou ? '#23804D' : '#2F6FD0', n);
+    });
+    const b = Math.min(etat.balle, 4);
+    s += `<g id="balle" transform="translate(${this.x(b)},250)">${svgBallon(0, 0, 18)}</g>`;
+    return `<svg class="svg-scene" id="terrain" viewBox="0 0 600 300" preserveAspectRatio="xMidYMid meet">${s}</svg>`;
+  },
+  afficher(q, scene, rep, api) {
+    q.balle = 0; q.anim = false; q.pasVisibles = false;
+    scene.innerHTML = `<div class="scene-col"><div id="zone-terrain" style="width:100%;flex:1;min-height:0;display:flex">${this.terrainSVG(q, { balle: 0 })}</div>
+      <div class="rangee" id="ctrl-passe" style="align-items:center;${q.passes ? '' : 'display:none'}">
+        <button class="btn orange" id="btn-passe">${svgIcoBallon()} Passe !</button>
+        <button class="btn-mini" id="btn-repasse" aria-label="Recommencer">${ICONES.recommencer}</button></div></div>`;
+    $('#btn-passe', scene).addEventListener('click', () => this.passer(q, api));
+    $('#btn-repasse', scene).addEventListener('click', () => { if (q.anim) return; q.balle = 0; this.redessiner(q); $('#btn-passe').disabled = false; });
+    api.pave(rep, { max: 3 });
+  },
+  redessiner(q, solution) { $('#zone-terrain').innerHTML = this.terrainSVG(q, { balle: q.balle, pasVisibles: q.pasVisibles, solution }); },
+  /* Une passe : le ballon va au joueur suivant, la voix dit son numéro */
+  passer(q, api, fin) {
+    if (q.anim || q.balle >= 4 || api.verrouille) { fin && fin(); return; }
+    q.anim = true; api.son('tir');
+    lancerBallon($('#balle'), this.x(q.balle), 250, this.x(q.balle + 1), 250, 50, 450, () => {
+      q.balle++; q.anim = false; this.redessiner(q);
+      api.dire(q.balle === q.idx ? 'Et lui ?' : String(q.nums[q.balle]));
+      if (q.balle >= 4) $('#btn-passe').disabled = true;
+      fin && fin();
+    });
+  },
+  verifier: (q, v) => Number(v) === q.manque,
+  indice(q) {
+    q.pasVisibles = true; q.balle = 0; this.redessiner(q);
+    $('#ctrl-passe').style.display = 'flex'; $('#btn-passe').disabled = false;
+    if (q.dizaine) return 'Regarde les dizaines : après …9, on passe à la dizaine suivante.';
+    if (q.pas === 1) return { texte: 'Chaque joueur a le numéro d’après : +1.', voix: 'Chaque joueur a le numéro d’après. On ajoute 1 à chaque passe.' };
+    if (q.pas === -1) return { texte: 'À l’envers : chaque joueur a 1 de moins.', voix: 'On compte à l’envers : à chaque passe, on enlève 1.' };
+    return { texte: `On avance de ${q.pas} en ${q.pas} : +${q.pas} à chaque passe.`, voix: `On compte de ${q.pas} en ${q.pas}. À chaque passe, on ajoute ${q.pas}.` };
+  },
+  solution(q) {
+    q.balle = 4; this.redessiner(q, true);
+    $('#ctrl-passe').style.display = 'none';
+    return `C’était ${q.manque} : ${q.nums.join(', ')}.`;
+  },
+  bravo(q) { q.balle = 4; this.redessiner(q, true); },
+});
+
+/* =====================================================================
    15. ÉCRAN D'ACCUEIL ET CHOIX DE L'AGRÈS
    ===================================================================== */
 function majAccueil() {
@@ -2469,14 +2813,16 @@ function majAccueil() {
 let matiereAgres = 'maths';
 function montrerAgres(matiere) {
   if (matiere) matiereAgres = matiere;
-  const jeux = jeuxDuNiveau().filter(j => j.matiere === matiereAgres);
+  // Onglets : Nombres, Lecture, et Foot (les jeux de calcul du terrain de foot)
+  const dansOnglet = j => matiereAgres === 'foot' ? j.univers === 'foot' : (j.matiere === matiereAgres && j.univers !== 'foot');
+  const jeux = jeuxDuNiveau().filter(dansOnglet);
   const agresDuNiveau = [...new Set(jeux.map(j => j.agres))];
-  $('#agres-titre').textContent = 'Choisis ton agrès';
+  $('#agres-titre').textContent = matiereAgres === 'foot' ? 'Sur le terrain' : 'Choisis ton agrès';
   $('#agres-matieres').style.display = '';
   $$('#agres-matieres [data-matiere]').forEach(b => b.classList.toggle('blanc', b.dataset.matiere !== matiereAgres));
   $('#grille-agres').innerHTML = agresDuNiveau.map(a => {
     const js = jeux.filter(j => j.agres === a);
-    const mat = js[0].matiere;
+    const mat = js[0].univers || js[0].matiere;
     return `<button class="carte-agres ${mat}" data-agres="${a}">${svgAgres(AGRES[a].icone)}
       <span class="t">${AGRES[a].nom}</span></button>`;
   }).join('');
@@ -2491,7 +2837,7 @@ function montrerAgres(matiere) {
 function montrerJeuxAgres(agres, js) {
   $('#agres-titre').textContent = AGRES[agres].nom;
   $('#agres-matieres').style.display = 'none';
-  $('#grille-agres').innerHTML = js.map(j => `<button class="carte-agres ${j.matiere}" data-jeu="${j.id}">${svgAgres(AGRES[agres].icone)}<span class="t">${j.nom}</span></button>`).join('');
+  $('#grille-agres').innerHTML = js.map(j => `<button class="carte-agres ${j.univers || j.matiere}" data-jeu="${j.id}">${svgAgres(AGRES[agres].icone)}<span class="t">${j.nom}</span></button>`).join('');
   $$('[data-jeu]').forEach(b => b.addEventListener('click', () => lancerJeu(b.dataset.jeu)));
 }
 
@@ -2524,6 +2870,7 @@ function montrerVitrine() {
     $('#figure-nom').textContent = f.nom;
     v.classList.add('actif');
     $('#figure-gym .anime').classList.add('fig-' + f.id);
+    if (f.id === 'jongles') $('#figure-gym svg').insertAdjacentHTML('beforeend', `<g class="balle-jongle">${svgBallon(60, -4, 11)}</g>`);
     Sons.jouer('boing');
     Voix.dire(f.nom);
     setTimeout(() => v.classList.remove('actif'), 1700);
@@ -2868,6 +3215,7 @@ function preparerInstallation() {
 }
 /* Écran « Jouer » : le toucher sur ce bouton autorise les bruitages et la voix */
 function preparerDemarrage() {
+  $('#demarrer-nom').textContent = CONFIG.nomAppli;
   $('#demarrer-gym').innerHTML = svgGymnaste(etat.profil.cree ? etat.profil : undefined, 'gym-svg');
   const note = $('#demarrer-note');
   const verifier = () => { const pb = Voix.probleme(); note.hidden = !pb; note.textContent = pb; };
